@@ -1,6 +1,6 @@
 <?php
 
-namespace Yii2\Extension\Postgis\db;
+namespace Yii2\Extension\Postgis\Db;
 
 use Yii2\Extension\Postgis\Behaviors\GeometryBehavior;
 use yii\helpers\ArrayHelper;
@@ -12,7 +12,7 @@ use yii\helpers\ArrayHelper;
  * @property-read string tableName table name of AR model
  * @property-read yii\db\ColumnSchema[] tableColumns table columns of AR model
  * @property-read array tableColumnsNames table columns names of AR model
- * @package Yii2\Extension\Postgis\db
+ * @package Yii2\Extension\Postgis\Db
  * @author Chernyavsky Denis <panopticum87@gmail.com>
  */
 trait PostgisQueryTrait

@@ -149,6 +149,9 @@ class GeometryBehavior extends Behavior
      */
     public function afterFind()
     {
+        if (empty($this->owner->{$this->attribute})) {
+            return parent::afterFind();
+        }
 
         if (!is_object(json_decode($this->owner->{$this->attribute}))) {
 

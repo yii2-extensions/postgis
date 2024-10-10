@@ -4,7 +4,7 @@ namespace Yii2\Extension\Postgis\Behaviors;
 
 use yii\base\Behavior;
 use yii\db\ActiveRecord;
-use Yii2\Extension\Postgis\components\StBuffer;
+use Yii2\Extension\Postgis\Components\StBuffer;
 
 /**
  * Class StBufferBehavior
