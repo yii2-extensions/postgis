@@ -56,6 +56,11 @@ class GeometryBehavior extends Behavior
     public $srid;
 
     /**
+     * @var int The maximum number of decimal places used in output (defaults to 15).
+     */
+    public $precision = 15;
+
+    /**
     /**
      * @var bool don't convert attribute afterFind if it in Postgis binary format (it requires a separate query)
      */
@@ -158,7 +163,7 @@ class GeometryBehavior extends Behavior
             if ($this->skipAfterFindPostgis) {
                 return true;
             } else {
-                $this->postgisToGeoJson();
+                $this->postgisToGeoJson($this->precision);
             }
         }
 
@@ -221,14 +226,21 @@ class GeometryBehavior extends Behavior
      * @throws InvalidConfigException
      * @throws \yii\db\Exception
      */
-    protected function postgisToGeoJson()
+    protected function postgisToGeoJson($precision)
     {
         $attribute = $this->attribute;
 
         if (!empty($this->owner->$attribute)) {
             $db = $this->_getDb();
-            $query = new Query();
-            $res = $query->select("ST_asGeoJson('" . $this->owner->$attribute . "') as $attribute")->createCommand($db)->queryOne();
+            // $query = new Query();
+            //$res = $query->select('ST_asGeoJson(\'' . $this->owner->$attribute . '\',"' . $attribute . '", ' . $precision . ') AS "' . $attribute . '"')->createCommand($db)->queryOne();
+
+            $res = (get_class($this->owner))::find()
+                ->select("ST_asGeoJson(\"$attribute\", $precision) AS \"$attribute\"")
+                ->where($this->owner->getPrimaryKey(true))
+                ->createCommand()
+                ->queryOne();
+
             $geoJson = $res[$attribute];
 
             $this->owner->$attribute = $geoJson;
